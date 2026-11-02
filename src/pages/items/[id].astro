@@ -18,9 +18,9 @@ const { data } = item;
 ---
 
 <Base title={data.title} description={data.summary}>
-  <div class="shell reader">
+  <div class="shell reader" data-reader={item.id}>
     <header class="item-header">
-        {isExample(item) && <p class="eyebrow item-kicker">示例条目 · 可以删</p>}
+        {isExample(item) && <p class="item-kicker">示例条目，可以删</p>}
         <div class="pill-row">
           <span class="pill">{data.domain}</span>
           <span class="pill">{data.status}</span>
@@ -66,7 +66,22 @@ const { data } = item;
             )
           }
         </div>
+        <div class="local-bar">
+          <button type="button" id="mark-learned" aria-pressed="false">标为已学</button>
+          <p id="local-readout">本机还没有阅读记录</p>
+        </div>
       </header>
+    <div
+      class="read-rail"
+      data-read-progress
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      aria-label="本机阅读进度"
+    >
+      <span data-read-rail></span>
+    </div>
     <div class="prose">
       <Content />
     </div>

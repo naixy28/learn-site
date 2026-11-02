@@ -20,6 +20,15 @@ const items = defineCollection({
     completed: z.coerce.date().optional(),
     notion_url: z.string().url().optional(),
     summary: z.string(),
+    terms: z
+      .array(
+        z.object({
+          id: z.string().regex(/^[a-z0-9-]+$/),
+          term: z.string().min(1),
+          definition: z.string().min(1),
+        }),
+      )
+      .optional(),
   }),
 });
 

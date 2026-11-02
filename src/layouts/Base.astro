@@ -44,9 +44,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <div class="shell header-inner">
         <a class="brand" href="/">
           <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-            <rect width="32" height="32" rx="8" fill="#1c1915"></rect>
-            <path d="M8 8h7.1c1.5 0 2.7 1 2.9 2.4V24c-.9-.8-2-1.2-3.2-1.2H8V8z" fill="#f3efe6"></path>
-            <path d="M24 8h-7.1C15.4 8 14.2 9 14 10.4V24c.9-.8 2-1.2 3.2-1.2H24V8z" fill="#8ed9d4"></path>
+            <rect width="32" height="32" rx="2" fill="currentColor"></rect>
+            <path class="brand-page" d="M8 8h7.1c1.5 0 2.7 1 2.9 2.4V24c-.9-.8-2-1.2-3.2-1.2H8V8z"></path>
+            <path class="brand-wire" d="M24 8h-7.1C15.4 8 14.2 9 14 10.4V24c.9-.8 2-1.2 3.2-1.2H24V8z"></path>
           </svg>
           Ryan 的学习笔记
         </a>
@@ -64,10 +64,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </main>
     <footer class="site-footer">
       <div class="shell">
-        <span>Ryan 的学习笔记 · learn.technokong.xyz</span>
+        <span>Ryan 的学习笔记，learn.technokong.xyz</span>
         <a href="/items/">浏览全部条目</a>
       </div>
     </footer>
+    <script>
+      import '../scripts/reader.ts';
+    </script>
     <script>
       const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
       if (button) {

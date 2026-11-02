@@ -10,13 +10,19 @@ interface Props {
 }
 
 const items = Astro.props.headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const first = items[0]?.text ?? '目录';
 ---
 
 {
   items.length > 0 && (
     <nav class="toc" aria-label="目录">
-      <p>目录</p>
-      <ol>
+      <button type="button" class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc-list">
+        <span class="toc-label">目录</span>
+        <span class="toc-current" data-toc-current>
+          {first}
+        </span>
+      </button>
+      <ol id="toc-list">
         {items.map((heading) => (
           <li class={`depth-${heading.depth}`}>
             <a href={`#${heading.slug}`}>{heading.text}</a>
