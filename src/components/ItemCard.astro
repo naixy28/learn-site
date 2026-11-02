@@ -1,0 +1,36 @@
+---
+import { formatDate, isExample, type Item } from '../lib/items';
+
+interface Props {
+  item: Item;
+  heading?: 'h2' | 'h3';
+}
+
+const { item, heading: Heading = 'h2' } = Astro.props;
+const { data } = item;
+---
+
+<article
+  class="card"
+  data-item
+  data-status={data.status}
+  data-domain={data.domain}
+  data-value={data.value}
+  data-type={data.source_type}
+  data-added={data.added.getTime()}
+>
+  <div class="pill-row">
+    <span class="pill">{data.domain}</span>
+    <span class="pill">{data.status}</span>
+    <span class={`pill value-${data.value}`}>{data.value}</span>
+    {isExample(item) && <span class="pill example">示例</span>}
+  </div>
+  <Heading>
+    <a href={`/items/${item.id}/`}>{data.title}</a>
+  </Heading>
+  <p class="summary">{data.summary}</p>
+  <div class="card-foot">
+    <span>{data.source_type}</span>
+    <time datetime={data.added.toISOString().slice(0, 10)}>{formatDate(data.added)} 加入</time>
+  </div>
+</article>
