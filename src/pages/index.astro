@@ -19,30 +19,20 @@ const doneWidth = stats.active === 0 ? 0 : Math.round((stats.已完成 / stats.a
 >
   <div class="shell">
     <section class="hero">
-      <div>
-        <p class="eyebrow">learn.technokong.xyz</p>
-        <h1>把读到的东西，变成自己的判断。</h1>
-        <p class="lede">
-          这里只放 Ryan 打算真正读完的材料。先看值不值得学，再写进项目，学完留下复盘。
-        </p>
-      </div>
-      <aside class="how">
-        <strong>一条笔记怎么用</strong>
-        <ol>
-          <li>一篇材料一个文件，放在学习清单里。</li>
-          <li>先写核心观点，再写和自己项目的结合点。</li>
-          <li>学完把状态改成已完成，并补上复盘。</li>
-        </ol>
-      </aside>
+      <h1>学习笔记</h1>
+      <p class="lede">
+        这里只放打算读完的材料。先看结论和机制，做完练习再对答案。学完在文件里把状态改成已完成，并写下复盘。
+      </p>
+      <ol class="steps">
+        <li>先看结论和机制图。</li>
+        <li>做练习。自测先写一句，再看答案。</li>
+        <li>学完改文件里的状态，并补上复盘。</li>
+      </ol>
     </section>
 
-    <ul class="stats">
-      <li><span class="num">{stats.total}</span><span class="label">全部</span></li>
-      <li><span class="num">{stats.待学}</span><span class="label">待学</span></li>
-      <li><span class="num">{stats.学习中}</span><span class="label">学习中</span></li>
-      <li><span class="num">{stats.已完成}</span><span class="label">已完成</span></li>
-      <li><span class="num">{stats.跳过}</span><span class="label">跳过</span></li>
-    </ul>
+    <p class="ledger">
+      共 {stats.total} 篇。待学 {stats.待学}，学习中 {stats.学习中}，已完成 {stats.已完成}，跳过 {stats.跳过}。
+    </p>
     <div
       class="progress"
       role="img"
@@ -50,7 +40,7 @@ const doneWidth = stats.active === 0 ? 0 : Math.round((stats.已完成 / stats.a
     >
       <span style={`width: ${doneWidth}%`}></span>
     </div>
-    <p class="progress-caption">有效进度 {stats.已完成} / {stats.active}（跳过的不计入）</p>
+    <p class="progress-caption">文件里标成已完成的有 {stats.已完成} / {stats.active}。跳过的不计入。本机阅读进度不改这里的数字。</p>
 
     <section class="section" aria-labelledby="in-progress-title">
       <div class="section-head">

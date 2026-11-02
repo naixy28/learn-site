@@ -6,6 +6,8 @@ Ryan 的公开学习站，地址是 [https://learn.technokong.xyz](https://learn
 
 界面是中文。
 
+学习页怎么写，见 [docs/WRITING_GUIDE.md](docs/WRITING_GUIDE.md)。视觉上按 [anthropics/skills](https://github.com/anthropics/skills) 的 `frontend-design` 来做（Apache-2.0，原文在 `.cursor/skills/frontend-design/`，没有改过）。
+
 ## 本地开发
 
 ```bash
@@ -49,29 +51,13 @@ summary: 一两句摘要，首页和列表用这段。
 
 ### 正文结构
 
-按这个顺序写。前四节和最后的原文链接每次都写；复盘等学完再补。
+以 [docs/WRITING_GUIDE.md](docs/WRITING_GUIDE.md) 为准。顺序是：来源说明、先看结论、机制图、讲解、参考、用在自己的项目、动手练习、自测、原文链接。复盘等状态改为「已完成」再写，并补上 `completed`。
 
-1. **核心观点深度讲解** — 用自己的话讲清楚，不要只贴摘要。
-2. **与 Ryan 项目的结合点** — 写到会改哪一段流程或代码。
-3. **动手练习** — 能在自己的项目里做的小步骤。
-4. **自测问题** — 先提问，答案放进可折叠的 `<details>`。
-5. **复盘** — 可选。学完、状态改为「已完成」时再写，并补上 `completed`。
-6. **原文链接** — 指向 `source_url`。
+机制图用 Mermaid，构建时画成 SVG。术语用 `[[id]]`，定义在 `src/content/glossary.ts` 或本篇 frontmatter 的 `terms`。自测用指南里的 `.try` 结构，先写再看答案。不要用一点就开的 `<details>`。
 
-自测答案这样写：
+构建会检查词表 id 和 Mermaid 是否排得开。加完后运行 `npm run build`。
 
-```markdown
-### 这里写问题
-
-<details>
-<summary>查看答案</summary>
-
-这里写答案。
-
-</details>
-```
-
-加完后运行 `npm run build`。首页会把「学习中」放在正在学，「待学」按「值得学」优先、同一档更早加入的靠前，最近加入按日期从新到旧。`/items/` 可以按状态、领域、价值和类型筛选，并按加入日期排序。
+首页会把「学习中」放在正在学，「待学」按「值得学」优先、同一档更早加入的靠前，最近加入按日期从新到旧。`/items/` 可以按状态、领域、价值和类型筛选，并按加入日期排序。文件里的 `status` 不变。读者在浏览器里标的「已学」和阅读进度只存在这台机器的 localStorage，叠在列表上，不写回文件。
 
 ## 部署
 

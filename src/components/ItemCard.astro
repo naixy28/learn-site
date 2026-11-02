@@ -18,6 +18,7 @@ const { data } = item;
   data-value={data.value}
   data-type={data.source_type}
   data-added={data.added.getTime()}
+  data-item-id={item.id}
 >
   <div class="pill-row">
     <span class="pill">{data.domain}</span>
@@ -29,6 +30,7 @@ const { data } = item;
     <a href={`/items/${item.id}/`}>{data.title}</a>
   </Heading>
   <p class="summary">{data.summary}</p>
+  <p class="local-read" data-local-read hidden></p>
   <div class="card-foot">
     <span>{data.source_type}</span>
     <time datetime={data.added.toISOString().slice(0, 10)}>{formatDate(data.added)} 加入</time>
