@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import ItemCard from '../components/ItemCard.astro';
+import { counts, inProgress, recentlyAdded, recommended } from '../lib/items';
+import Base from '../layouts/Base.astro';
+
+const items = await getCollection('items');
+const stats = counts(items);
+const learning = inProgress(items);
+const toStudy = recommended(items).slice(0, 6);
+const recent = recentlyAdded(items);
+const doneWidth = stats.active === 0 ? 0 : Math.round((stats.已完成 / stats.active) * 100);
+---
+
+<Base
+  title="Ryan 的学习笔记"
+  description="Ryan 的个人学习台。按状态、领域和价值整理正在读的材料。"
+  current="home"
+>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">learn.technokong.xyz</p>
+        <h1>把读到的东西，变成自己的判断。</h1>
+        <p class="lede">
+          这里只放 Ryan 打算真正读完的材料。先看值不值得学，再写进项目，学完留下复盘。
+        </p>
+      </div>
+      <aside class="how">
+        <strong>一条笔记怎么用</strong>
+        <ol>
+          <li>一篇材料一个文件，放在学习清单里。</li>
+          <li>先写核心观点，再写和自己项目的结合点。</li>
+          <li>学完把状态改成已完成，并补上复盘。</li>
+        </ol>
+      </aside>
+    </section>
+
+    <ul class="stats">
+      <li><span class="num">{stats.total}</span><span class="label">全部</span></li>
+      <li><span class="num">{stats.待学}</span><span class="label">待学</span></li>
+      <li><span class="num">{stats.学习中}</span><span class="label">学习中</span></li>
+      <li><span class="num">{stats.已完成}</span><span class="label">已完成</span></li>
+      <li><span class="num">{stats.跳过}</span><span class="label">跳过</span></li>
+    </ul>
+    <div
+      class="progress"
+      role="img"
+      aria-label={`有效进度 ${stats.已完成} / ${stats.active}，不含跳过`}
+    >
+      <span style={`width: ${doneWidth}%`}></span>
+    </div>
+    <p class="progress-caption">有效进度 {stats.已完成} / {stats.active}（跳过的不计入）</p>
+
+    <section class="section" aria-labelledby="in-progress-title">
+      <div class="section-head">
+        <h2 id="in-progress-title">正在学</h2>
+        <p>状态是「学习中」的条目</p>
+      </div>
+      {
+        learning.length > 0 ? (
+          <div class="card-grid">
+            {learning.map((item) => (
+              <ItemCard item={item} heading="h3" />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">现在没有进行中的条目。从下面的建议里挑一条，把状态改成「学习中」。</p>
+        )
+      }
+    </section>
+
+    <section class="section" aria-labelledby="recommended-title">
+      <div class="section-head">
+        <h2 id="recommended-title">建议先学</h2>
+        <p>待学里，值得学的在前，同档按加入时间从早到晚</p>
+      </div>
+      {
+        toStudy.length > 0 ? (
+          <div class="card-grid">
+            {toStudy.map((item) => (
+              <ItemCard item={item} heading="h3" />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">待学清单是空的。新材料加进来之后，标成「值得学」的会排在前面。</p>
+        )
+      }
+    </section>
+
+    <section class="section" aria-labelledby="recent-title">
+      <div class="section-head">
+        <h2 id="recent-title">最近加入</h2>
+        <p><a href="/items/">看全部并排序</a></p>
+      </div>
+      {
+        recent.length > 0 ? (
+          <div class="card-grid">
+            {recent.map((item) => (
+              <ItemCard item={item} heading="h3" />
+            ))}
+          </div>
+        ) : (
+          <p class="empty">还没有条目。在 src/content/items/ 里加一篇 Markdown 即可。</p>
+        )
+      }
+    </section>
+  </div>
+</Base>

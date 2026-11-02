@@ -1,0 +1,75 @@
+---
+import { getCollection, render } from 'astro:content';
+import Toc from '../../components/Toc.astro';
+import { formatDate, isExample, type Item } from '../../lib/items';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('items');
+  return items.map((item) => ({
+    params: { id: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props as { item: Item };
+const { Content, headings } = await render(item);
+const { data } = item;
+---
+
+<Base title={data.title} description={data.summary}>
+  <div class="shell reader">
+    <header class="item-header">
+        {isExample(item) && <p class="eyebrow item-kicker">示例条目 · 可以删</p>}
+        <div class="pill-row">
+          <span class="pill">{data.domain}</span>
+          <span class="pill">{data.status}</span>
+          <span class={`pill value-${data.value}`}>{data.value}</span>
+          <span class="pill">{data.source_type}</span>
+        </div>
+        <h1>{data.title}</h1>
+        <dl class="facts">
+          <div>
+            <dt>加入</dt>
+            <dd><time datetime={data.added.toISOString().slice(0, 10)}>{formatDate(data.added)}</time></dd>
+          </div>
+          <div>
+            <dt>完成</dt>
+            <dd>
+              {
+                data.completed ? (
+                  <time datetime={data.completed.toISOString().slice(0, 10)}>{formatDate(data.completed)}</time>
+                ) : (
+                  '还没完成'
+                )
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>价值判断</dt>
+            <dd>{data.value}</dd>
+          </div>
+          <div>
+            <dt>来源类型</dt>
+            <dd>{data.source_type}</dd>
+          </div>
+        </dl>
+        <p class="reason"><strong>为什么是这个价值：</strong>{data.value_reason}</p>
+        <p class="item-summary"><strong>摘要：</strong>{data.summary}</p>
+        <div class="link-row">
+          <a href={data.source_url} target="_blank" rel="noopener noreferrer">打开原文</a>
+          {
+            data.notion_url && (
+              <a href={data.notion_url} target="_blank" rel="noopener noreferrer">
+                打开 Notion
+              </a>
+            )
+          }
+        </div>
+      </header>
+    <div class="prose">
+      <Content />
+    </div>
+    <Toc headings={headings} />
+  </div>
+</Base>

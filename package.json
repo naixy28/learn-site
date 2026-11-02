@@ -1,0 +1,19 @@
+{
+  "name": "learn-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.2",
+    "astro": "^7.4.4",
+    "wrangler": "^4.156.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
