@@ -7,6 +7,7 @@ value: 值得学
 value_reason: 整门课先挑 3 讲加作业 1：开源 harness 加 Temporal 持久化、上下文管理五种手段、多 agent 的编排与失败模式，正好对应你的 orchestrator 和长任务控制。
 status: 待学
 added: 2026-11-14
+notion_url: https://app.notion.com/p/418f3ac83f9e81de9712ea6ffd23a4ad
 summary: 斯坦福 2026 秋季课程。按 Ryan 的方向排出优先看的讲座和作业：第 5、6、8 讲和作业 1 是主线，第 9、10 讲和作业 2 是第二梯队。每个说法都核对过课程主页、课件和作业仓库。
 terms:
   - id: cs-compound
