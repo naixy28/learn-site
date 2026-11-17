@@ -7,6 +7,7 @@ value: 值得学
 value_reason: pstack 把「一个入口路由 + 22 个 playbook + 24 条一文件一原则 + 按角色配模型的子 agent」写成了可以逐个打开的文件，正好是你给多个 bot 分工、写自己的 skill 时要解决的组织问题。
 status: 待学
 added: 2026-11-17
+notion_url: https://app.notion.com/p/41bf3ac83f9e81a391e3eca5a366eca8
 summary: 按 pstack 0.15.43 的实际目录拆解这套 skill：有哪几层、/poteto-mode 怎么路由和派子 agent、模型怎么按角色配、skill 之间怎么引用，以及 SKILL.md 的写法。关键段落先引英文原句，再给中文解读；附一个能点开每个 skill 的目录浏览器。
 terms:
   - id: ps-playbook
