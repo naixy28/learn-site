@@ -231,15 +231,15 @@ function assertLayout(svg: string, where: string) {
 
 function sizeSvg(svg: string): string {
   const match = /viewBox="[-\d.]+ [-\d.]+ ([-\d.]+) ([-\d.]+)"/.exec(svg);
-  if (!match) return svg;
+  const open = /<svg\b[^>]*>/.exec(svg);
+  if (!match || !open) return svg;
   const width = Math.ceil(Number(match[1]) + 16);
   const height = Math.ceil(Number(match[2]) + 16);
-  let next = svg.replace(/\swidth="[^"]*"/, ` width="${width}"`);
-  if (!/\swidth=/.test(next)) next = next.replace('<svg', `<svg width="${width}"`);
-  next = /\sheight=/.test(next)
-    ? next.replace(/\sheight="[^"]*"/, ` height="${height}"`)
-    : next.replace('<svg', `<svg height="${height}"`);
-  return next.replace(/\sstyle="[^"]*"/, '');
+  // 只改根 <svg> 的开标签。根上没有 height 时，旧写法会改到第一个节点的 rect。
+  const tag = open[0]
+    .replace(/\s(?:width|height|style)="[^"]*"/g, '')
+    .replace(/^<svg/, `<svg width="${width}" height="${height}"`);
+  return svg.slice(0, open.index) + tag + svg.slice(open.index + open[0].length);
 }
 
 function harden(svg: string): string {
