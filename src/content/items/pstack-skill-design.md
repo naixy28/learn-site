@@ -5,8 +5,9 @@ source_type: 其他
 domain: Agent架构
 value: 值得学
 value_reason: pstack 把「一个入口路由 + 22 个 playbook + 24 条一文件一原则 + 按角色配模型的子 agent」写成了可以逐个打开的文件，正好是你给多个 bot 分工、写自己的 skill 时要解决的组织问题。
-status: 待学
+status: 已完成
 added: 2026-11-17
+completed: 2026-11-18
 notion_url: https://app.notion.com/p/41bf3ac83f9e81a391e3eca5a366eca8
 summary: 按 pstack 0.15.43 的实际目录拆解这套 skill：有哪几层、/poteto-mode 怎么路由和派子 agent、模型怎么按角色配、skill 之间怎么引用，以及 SKILL.md 的写法。关键段落先引英文原句，再给中文解读；附一个能点开每个 skill 的目录浏览器。
 terms:
@@ -477,6 +478,18 @@ build-the-lever 说要扇出时，把做法、验收和边界写成一个子 age
     <p>按 encode-lessons-in-structure，把它变成 lint、元数据标记、运行时检查或脚本，而不是再加文字；能用结构解决就只用结构。correct 给了顺序：架构、类型和 lint、测试，文档放最后。实在需要判断、无法编码时，才把指令放得更显眼，并加一个失败的例子。</p>
   </div>
 </div>
+
+## 复盘
+
+2026-11-18 用 5 道自测题对过一遍。
+
+- **第 1 题（playbook 和 skill）：答对。** playbook 是 poteto-mode 下的步骤清单，不能直接调用，由路由层选择。补充：选中后步骤会原样抄进 todo，再按步骤调用 skill。
+- **第 2 题（kickoff 第一行指向 worker.md）：讨论后弄通。** 卡点在 skill 怎么加载。结论是：斜杠命令只负责打开入口，入口后面靠文件路径一层层读进来。主线程的入口是你敲的 `/poteto-mode`，它的正文和 playbook 写着其他 skill 的路径；子 agent 没有人替它敲命令，所以 kickoff 第一行直接给它 worker.md 的路径。disable-model-invocation 只关掉「按 description 自动加载」，不拦按路径读文件。
+- **第 3 题（arena / swarm / interrogate）：概念有偏差，已纠正。** arena 是同题比稿，选一份底稿再嫁接其他候选的长处；swarm 是切片分工或竞速，交回汇总，不是「只取最好的一个」；interrogate 是多个对手去打破一个 diff 或设计，只认能复现的问题，全部保留。用交易系统举例：设计风控模块用 arena，给 20 个策略补回测用 swarm，上线前找下单模块的 bug 用 interrogate。
+- **第 4 题（换便宜模型做验证）：答对。** 改 `pstack-models.mdc` 里 swarm workers 那一行。skill 里是默认值，配置文件是按角色的覆盖。
+- **第 5 题（同一条指令要写第二遍）：方向接近。** 你想到用固定工作流在每次改动时触发 lint；pstack 再往前一步：工作流写在 skill 里仍是文字，应改成结构（lint 规则、提交钩子、CI、运行时检查、脚本），让 agent 想忘也忘不了。顺序是架构 → 类型和 lint → 测试 → 文档。
+
+**值得带走的一点：** 给子 agent 或别的 bot 的规则，不能指望它自己加载，要写进派活时的那份说明里，最好是一个它第一步就去读的文件路径。
 
 ## 原文链接
 
